@@ -47,14 +47,15 @@
             closeDoor = new System.Windows.Forms.Timer(components);
             groundFloor = new System.Windows.Forms.Timer(components);
             floorOne = new System.Windows.Forms.Timer(components);
-            dataGridView1 = new DataGridView();
+            elevatorLog = new DataGridView();
+            dataRefresh = new System.Windows.Forms.Timer(components);
             ((System.ComponentModel.ISupportInitialize)elevatorInterior).BeginInit();
             ((System.ComponentModel.ISupportInitialize)leftDoorUp).BeginInit();
             ((System.ComponentModel.ISupportInitialize)rightDoorUp).BeginInit();
             ((System.ComponentModel.ISupportInitialize)rightDoorDown).BeginInit();
             ((System.ComponentModel.ISupportInitialize)leftDoorDown).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)elevatorLog).BeginInit();
             SuspendLayout();
             // 
             // elevatorInterior
@@ -125,7 +126,7 @@
             // pictureBox1
             // 
             pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
-            pictureBox1.Location = new Point(597, 106);
+            pictureBox1.Location = new Point(478, 193);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(245, 412);
             pictureBox1.TabIndex = 8;
@@ -134,7 +135,7 @@
             // doorOpenUp
             // 
             doorOpenUp.Image = (Image)resources.GetObject("doorOpenUp.Image");
-            doorOpenUp.Location = new Point(616, 441);
+            doorOpenUp.Location = new Point(497, 528);
             doorOpenUp.Name = "doorOpenUp";
             doorOpenUp.Size = new Size(53, 41);
             doorOpenUp.TabIndex = 9;
@@ -144,7 +145,7 @@
             // doorCloseUp
             // 
             doorCloseUp.Image = (Image)resources.GetObject("doorCloseUp.Image");
-            doorCloseUp.Location = new Point(765, 441);
+            doorCloseUp.Location = new Point(646, 528);
             doorCloseUp.Name = "doorCloseUp";
             doorCloseUp.Size = new Size(49, 41);
             doorCloseUp.TabIndex = 10;
@@ -154,7 +155,7 @@
             // floorGroundUp
             // 
             floorGroundUp.Image = (Image)resources.GetObject("floorGroundUp.Image");
-            floorGroundUp.Location = new Point(616, 331);
+            floorGroundUp.Location = new Point(497, 418);
             floorGroundUp.Name = "floorGroundUp";
             floorGroundUp.Size = new Size(53, 55);
             floorGroundUp.TabIndex = 12;
@@ -164,7 +165,7 @@
             // floorOneUp
             // 
             floorOneUp.Image = (Image)resources.GetObject("floorOneUp.Image");
-            floorOneUp.Location = new Point(616, 244);
+            floorOneUp.Location = new Point(497, 331);
             floorOneUp.Name = "floorOneUp";
             floorOneUp.Size = new Size(53, 60);
             floorOneUp.TabIndex = 13;
@@ -174,7 +175,7 @@
             // floorTxtUp
             // 
             floorTxtUp.Font = new Font("Segoe UI", 27.75F, FontStyle.Regular, GraphicsUnit.Point);
-            floorTxtUp.Location = new Point(669, 116);
+            floorTxtUp.Location = new Point(550, 203);
             floorTxtUp.Multiline = true;
             floorTxtUp.Name = "floorTxtUp";
             floorTxtUp.ReadOnly = true;
@@ -203,21 +204,27 @@
             floorOne.Interval = 20;
             floorOne.Tick += floorOne_Tick;
             // 
-            // dataGridView1
+            // elevatorLog
             // 
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(910, 62);
-            dataGridView1.Name = "dataGridView1";
-            dataGridView1.RowTemplate.Height = 25;
-            dataGridView1.Size = new Size(328, 473);
-            dataGridView1.TabIndex = 15;
+            elevatorLog.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            elevatorLog.Location = new Point(789, 26);
+            elevatorLog.Name = "elevatorLog";
+            elevatorLog.RowTemplate.Height = 25;
+            elevatorLog.Size = new Size(508, 481);
+            elevatorLog.TabIndex = 15;
+            // 
+            // dataRefresh
+            // 
+            dataRefresh.Enabled = true;
+            dataRefresh.Interval = 1000;
+            dataRefresh.Tick += dataRefresh_Tick;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1299, 981);
-            Controls.Add(dataGridView1);
+            Controls.Add(elevatorLog);
             Controls.Add(floorTxtUp);
             Controls.Add(floorOneUp);
             Controls.Add(floorGroundUp);
@@ -239,7 +246,7 @@
             ((System.ComponentModel.ISupportInitialize)rightDoorDown).EndInit();
             ((System.ComponentModel.ISupportInitialize)leftDoorDown).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)elevatorLog).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -263,6 +270,7 @@
         private System.Windows.Forms.Timer closeDoor;
         private System.Windows.Forms.Timer groundFloor;
         private System.Windows.Forms.Timer floorOne;
-        private DataGridView dataGridView1;
+        private DataGridView elevatorLog;
+        private System.Windows.Forms.Timer dataRefresh;
     }
 }

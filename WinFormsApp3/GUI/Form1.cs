@@ -1,4 +1,5 @@
 using MySql.Data.MySqlClient;
+using System.Data;
 
 namespace WinFormsApp3;
 
@@ -18,11 +19,33 @@ public partial class Form1 : Form
         InitializeComponent();
         originalDoorPosition = leftDoorDown.Left;
         floorTxtUp.Text = (elevatorFloor ? 1 : 0).ToString();
-
-
-
-
+        LoadElevatorLogData();
     }
+
+    private void LoadElevatorLogData()
+    {
+        try
+        {
+            DataTable dt = con.ViewData();
+            if (dt.Rows.Count > 0)
+            {
+                elevatorLog.DataSource = dt;
+            }
+            else
+            {
+                MessageBox.Show("No data found.");
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("Failed to load data: " + ex.Message);
+        }
+        finally
+        {
+            con.connClose();
+        }
+    }
+
 
     private void elevatorDoorOpen_Tick(object sender, EventArgs e)
     {
@@ -53,6 +76,7 @@ public partial class Form1 : Form
             {
                 floorGroundDoor = true;
             }
+
         }
     }
 
@@ -61,7 +85,33 @@ public partial class Form1 : Form
         if (!elevatorDoorOpen.Enabled)
         {
             elevatorDoorOpen.Start();
+            try
+            {
 
+                if (elevatorFloor)
+                {
+                    con.insertData("Elevator First Floor Door Opened");
+                    con.connClose();
+
+                }
+                else
+                {
+                    con.insertData("Elevator Ground Floor Door Opened");
+
+                    con.connClose();
+                }
+
+
+
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Failureeee");
+            }
+            finally
+            {
+                con.connClose();
+            }
 
         }
 
@@ -100,6 +150,35 @@ public partial class Form1 : Form
             {
 
                 closeDoor.Start();
+
+                try
+                {
+
+                    if (elevatorFloor)
+                    {
+                        con.insertData("Elevator First Floor Door Closed");
+
+                        con.connClose();
+
+                    }
+                    else
+                    {
+                        con.insertData("Elevator Ground Floor Door Closed");
+
+                        con.connClose();
+                    }
+
+
+
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Failureeee");
+                }
+                finally
+                {
+                    con.connClose();
+                }
             }
         }
         else
@@ -108,6 +187,34 @@ public partial class Form1 : Form
             {
 
                 closeDoor.Start();
+                try
+                {
+
+                    if (elevatorFloor)
+                    {
+                        con.insertData("Elevator First Floor Door Closed");
+
+                        con.connClose();
+
+                    }
+                    else
+                    {
+                        con.insertData("Elevator Ground Floor Door Closed");
+
+                        con.connClose();
+                    }
+
+
+
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Failureeee");
+                }
+                finally
+                {
+                    con.connClose();
+                }
             }
         }
 
@@ -147,8 +254,28 @@ public partial class Form1 : Form
         {
 
             groundFloor.Start();
+            try
+            {
+
+
+
+                con.insertData("Elevator reached Door Ground Floor");
+
+                con.connClose();
+
+
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Failureeee");
+            }
+            finally
+            {
+                con.connClose();
+            }
 
         }
+
     }
 
     private void floorOneUp_Click(object sender, EventArgs e)
@@ -157,6 +284,27 @@ public partial class Form1 : Form
         {
 
             floorOne.Start();
+
+            groundFloor.Start();
+            try
+            {
+
+
+
+                con.insertData("Elevator reached Door First Floor");
+
+                con.connClose();
+
+
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Failureeee");
+            }
+            finally
+            {
+                con.connClose();
+            }
 
 
 
@@ -241,19 +389,18 @@ public partial class Form1 : Form
 
     private void button1_Click_1(object sender, EventArgs e)
     {
+
+    }
+
+    private void dataRefresh_Tick(object sender, EventArgs e)
+    {
         try
         {
-
-
-            con.insertData("asdasd");
-
-            con.connClose();
-
-
+            LoadElevatorLogData();
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            MessageBox.Show("Failureeee");
+            MessageBox.Show("Failed to load data: " + ex.Message);
         }
         finally
         {

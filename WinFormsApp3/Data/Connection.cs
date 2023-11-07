@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.Intrinsics.Arm;
 using System.Text;
 using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
+using Org.BouncyCastle.Asn1.X509.Qualified;
 
 namespace Elevator_.Data
 {
@@ -16,6 +19,7 @@ namespace Elevator_.Data
         static string myDatabase = "elevatorsystem;";
         static string Uid = "root;";
         static string password = ";";
+      
         public static MySqlConnection dataSource()
         {
             connMaster = new MySqlConnection($"server={server} database={myDatabase} Uid={Uid} password={password}");
@@ -47,6 +51,38 @@ namespace Elevator_.Data
             connClose();
           
         }
+
+        public DataTable ViewData()
+        {
+            DataTable dt = new DataTable();
+
+            try
+            {
+                dataSource();
+                connMaster.Open();
+                string query = "SELECT * FROM elevatorlog";
+                using (MySqlCommand command = new MySqlCommand(query, connMaster))
+                {
+                    using (MySqlDataAdapter adpt = new MySqlDataAdapter(command))
+                    {
+                        adpt.Fill(dt);
+                    }
+                }
+            }
+            catch (MySqlException ex)
+            {
+                // Handle exceptions or logging here
+                Console.WriteLine("Error: " + ex.Message);
+            }
+            finally
+            {
+                connClose();
+            }
+
+            return dt;
+        }
+
+       
     }
 
-}
+    }
